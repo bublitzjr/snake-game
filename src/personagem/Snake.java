@@ -8,8 +8,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class Snake {
-	int x;
-    int y;
+	public static int x;
+        public static int y;
     BufferedImage imagem = null;
 
     public Snake() {

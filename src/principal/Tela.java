@@ -6,29 +6,30 @@ import java.awt.event.KeyListener;
 import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
+import Personagem.*;
 
 
 public class Tela extends JFrame implements KeyListener {
-	int x = 100;
-	int y = 100;
+	
 	
 	JPanel painel = null;
-	
+	 personagem.Snake snake = new personagem.Snake();
+         
 	public Tela() {	
 		super("SNAKE");
-		setSize(300, 300);
+		setSize(800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		painel = new JPanel();
 		getContentPane().add(painel);
-	    addKeyListener(this);
+                addKeyListener(this);
+               
 	}
 	
 
 	public void desenhar( Graphics g ){
 		Graphics gPainel = painel.getGraphics();
 		gPainel.clearRect(0, 0, getWidth(), getHeight());
-		g.drawRect(x, y, 50, 50);
+		g.drawRect(snake.x, snake.y, 50, 50);
 		 
 	}
 	
@@ -44,19 +45,19 @@ public class Tela extends JFrame implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-			x+=10;
+			snake.x+=10;
 			repaint();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-			x-=10 ;
+			snake.x-=10 ;
 			repaint();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-			y-=10;
+			snake.y-=10;
 			repaint();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-			y+=10;
+			snake.y+=10;
 			repaint();
 		}
 	}
