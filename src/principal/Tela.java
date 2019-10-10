@@ -7,14 +7,16 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import Personagem.*;
+import java.awt.image.BufferedImage;
 
 
 public class Tela extends JFrame implements KeyListener {
 	
 	
 	JPanel painel = null;
-	 personagem.Snake snake = new personagem.Snake();
-         
+	personagem.Snake snake = new personagem.Snake(400,300);
+        BufferedImage cobra = snake.getImagem();
+        
 	public Tela() {	
 		super("SNAKE");
 		setSize(800, 600);
@@ -22,6 +24,7 @@ public class Tela extends JFrame implements KeyListener {
 		painel = new JPanel();
 		getContentPane().add(painel);
                 addKeyListener(this);
+                
                
 	}
 	
@@ -29,7 +32,10 @@ public class Tela extends JFrame implements KeyListener {
 	public void desenhar( Graphics g ){
 		Graphics gPainel = painel.getGraphics();
 		gPainel.clearRect(0, 0, getWidth(), getHeight());
-		g.drawRect(snake.x, snake.y, 50, 50);
+		 
+                g.drawImage(cobra,snake.x, snake.y, null);
+               
+                
 		 
 	}
 	
@@ -45,18 +51,22 @@ public class Tela extends JFrame implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+                    if (snake.x <100)  //não passar da borda direita
 			snake.x+=10;
 			repaint();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+                    if (snake.x > 0) //não passar da borda esquerda
 			snake.x-=10 ;
 			repaint();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
+                    if (snake.y > -160) //não passar da borda superior
 			snake.y-=10;
 			repaint();
 		}
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+                    if (snake.y < 100) //não passar da borda inferior
 			snake.y+=10;
 			repaint();
 		}

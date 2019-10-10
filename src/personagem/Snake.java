@@ -12,7 +12,9 @@ public class Snake {
         public static int y;
     BufferedImage imagem = null;
 
-    public Snake() {
+    public Snake(int x,int y) {
+       this.x = x;
+       this.y=y;
         try {
             imagem = ImageIO.read(new File("snake.png"));
         }
