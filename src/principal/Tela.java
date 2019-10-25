@@ -7,19 +7,23 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import Personagem.*;
+import campo.Posicao;
 import java.awt.image.BufferedImage;
+import personagem.Snake;
 
 
 public class Tela extends JFrame implements KeyListener {
 	
 	
 	JPanel painel = null;
-	personagem.Snake snake = new personagem.Snake(400,300);
+        
+	personagem.Snake snake = new personagem.Snake(240,100); // onde a cobra começa
         BufferedImage cobra = snake.getImagem();
         
 	public Tela() {	
 		super("SNAKE");
 		setSize(800, 600);
+                snake.Setinicio(240,100);// onde a cobra restarta(de preferência o mesmo de onde ela começa)
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		painel = new JPanel();
 		getContentPane().add(painel);
@@ -33,42 +37,81 @@ public class Tela extends JFrame implements KeyListener {
 		Graphics gPainel = painel.getGraphics();
 		gPainel.clearRect(0, 0, getWidth(), getHeight());
 		 
-                g.drawImage(cobra,snake.x, snake.y, null);
-               
                 
+                g.drawImage(cobra,snake.cabecaCobra.x, snake.cabecaCobra.y, null);
+                
+                 snake.corpoCobra.forEach((posicao) -> desenharCorpo(posicao, g)); 
+      
+                              
 		 
 	}
+        
+        public void desenharCorpo(Posicao posicao, Graphics g){
+            g.drawImage(cobra,posicao.x, posicao.y, null);
+        }
 	
 	  public void paint(Graphics g) {
 			desenhar(g);
 	    }
 
 	  public void update(Graphics g) {
-		
+                        desenhar(g);
 	    }
 
 	  
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-                    if (snake.x <100)  //não passar da borda direita
-			snake.x+=10;
+                    if (snake.cabecaCobra.x <580)  //não passar da borda direita
+                    {
+                        snake.corpoCobra.add(snake.cabecaCobra);
+			snake.cabecaCobra.x+=10;
 			repaint();
-		}
+                    }else
+                    {
+                   // jogo.morreu();
+                   //scoreboard.add(this.score);//implementações futuras
+                    snake.reset();
+                    }
+                }
 		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-                    if (snake.x > 0) //não passar da borda esquerda
-			snake.x-=10 ;
+                    if (snake.cabecaCobra.x > -50) //não passar da borda esquerda
+                    {
+                        snake.corpoCobra.add(snake.cabecaCobra);
+			snake.cabecaCobra.x-=10 ;
 			repaint();
+                    }else
+                    {
+                   // jogo.morreu();
+                   //scoreboard.add(this.score);//implementações futuras
+                    snake.reset();
+                    }
 		}
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
-                    if (snake.y > -160) //não passar da borda superior
-			snake.y-=10;
+                    if (snake.cabecaCobra.y > -170)//não passar da borda superior
+                    { 
+                        snake.corpoCobra.add(snake.cabecaCobra);
+			snake.cabecaCobra.y-=10;
 			repaint();
-		}
+                    }else
+                    {
+                   // jogo.morreu();
+                   //scoreboard.add(this.score);//implementações futuras
+                    snake.reset();
+                    }
+                }
 		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-                    if (snake.y < 100) //não passar da borda inferior
-			snake.y+=10;
+                    if (snake.cabecaCobra.y < 340) //não passar da borda inferior
+                    {
+                        snake.corpoCobra.add(snake.cabecaCobra);
+			snake.cabecaCobra.y+=10;
 			repaint();
+                    }else
+                    {
+                   // jogo.morreu();
+                   //scoreboard.add(this.score); //implementações futuras
+                    snake.reset();
+                    }
 		}
 	}
 
