@@ -17,7 +17,7 @@ public class Tela extends JFrame implements KeyListener {
 	
 	JPanel painel = null;
         
-	personagem.Snake snake = new personagem.Snake(240,100); // onde a cobra começa
+	personagem.Snake snake = new personagem.Snake(240,102); // onde a cobra começa
     BufferedImage cobra = snake.getImagem();
         
 	public Tela() {	
@@ -67,7 +67,7 @@ public class Tela extends JFrame implements KeyListener {
                     if (snake.cabecaCobra.x <580)  //não passar da borda direita
                     {
                         snake.corpoCobra.add(snake.cabecaCobra);
-                        snake.cabecaCobra.x+=10;
+                        snake.cabecaCobra.x+=20;
                         repaint();
                     }else
                     {
@@ -80,7 +80,7 @@ public class Tela extends JFrame implements KeyListener {
                     if (snake.cabecaCobra.x > -50) //não passar da borda esquerda
                     {
                         snake.corpoCobra.add(snake.cabecaCobra);
-                        snake.cabecaCobra.x-=10 ;
+                        snake.cabecaCobra.x-=20 ;
                         repaint();
                     }else
                     {
@@ -93,7 +93,7 @@ public class Tela extends JFrame implements KeyListener {
                     if (snake.cabecaCobra.y > -170)//não passar da borda superior
                     { 
                         snake.corpoCobra.add(snake.cabecaCobra);
-                        snake.cabecaCobra.y-=10;
+                        snake.cabecaCobra.y-=20;
                         repaint();
                     }else
                     {
@@ -106,7 +106,7 @@ public class Tela extends JFrame implements KeyListener {
                     if (snake.cabecaCobra.y < 340) //não passar da borda inferior
                     {
                         snake.corpoCobra.add(snake.cabecaCobra);
-                        snake.cabecaCobra.y+=10;
+                        snake.cabecaCobra.y+=20;
                         repaint();
                     }else
                     {
