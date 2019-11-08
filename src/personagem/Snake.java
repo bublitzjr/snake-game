@@ -7,19 +7,29 @@ import java.io.IOException;
 import campo.Posicao;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
+import campo.Fruta;
+
 
 import javax.imageio.ImageIO;
 
 public class Snake {
+    public int tamanho = 0;
     public static ArrayList<Posicao> corpoCobra = new ArrayList();
     public static Posicao cabecaCobra = new Posicao(0,0);
-    public static BufferedImage imagem = null;
+    public static BufferedImage norte = null;
+    public static BufferedImage leste = null;
+    public static BufferedImage sul = null;
+    public static BufferedImage oeste = null;
+    public static BufferedImage corpo = null;
     
     private Posicao inicio = new Posicao(0,0);
         
     public void Setinicio(int x, int y){
+       
         inicio.x = x;
         inicio.y = y;
+        
+        
     }
   
     public Snake(int x,int y) {      //usaremos sempre x DEPOIS y por padrão
@@ -27,7 +37,11 @@ public class Snake {
         cabecaCobra = new Posicao(x,y);
         
         try {
-            imagem = ImageIO.read(new File("snake.png"));
+            norte = ImageIO.read(new File("snake_n.png"));
+            leste = ImageIO.read(new File("snake_l.png"));
+            sul = ImageIO.read(new File("snake_s.png"));
+            oeste = ImageIO.read(new File("snake_e.png"));
+            corpo = ImageIO.read(new File("snake_body.png"));
         }
         catch (IOException e) {
             System.out.println(e);
@@ -37,7 +51,27 @@ public class Snake {
 
     public BufferedImage getImagem()
     {
-        return imagem;
+        Posicao ultimosqm = null;
+        if(corpoCobra.isEmpty())
+            return norte;
+        else{            
+         ultimosqm = new Posicao(corpoCobra.get(corpoCobra.size() - 1).x,corpoCobra.get(corpoCobra.size() - 1).y);
+        System.out.print(ultimosqm.x + " , ");
+        System.out.println(ultimosqm.y);
+        if((ultimosqm.x == cabecaCobra.x) && (ultimosqm.y == cabecaCobra.y))
+            System.out.println("erro: cobra desincronizada");
+        }  
+            
+         if((ultimosqm.x < cabecaCobra.x) && (ultimosqm.y == cabecaCobra.y)){
+             return leste;            
+         }else 
+         if((ultimosqm.x > cabecaCobra.x) && (ultimosqm.y == cabecaCobra.y)){
+             return oeste; 
+         }else
+         if((ultimosqm.x == cabecaCobra.x) && (ultimosqm.y < cabecaCobra.y)){
+            return sul; 
+         }else
+        return norte;
     }
     
     public void reset()
