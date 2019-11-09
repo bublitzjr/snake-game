@@ -25,11 +25,8 @@ public class Snake {
     private Posicao inicio = new Posicao(0,0);
         
     public void Setinicio(int x, int y){
-       
         inicio.x = x;
-        inicio.y = y;
-        
-        
+        inicio.y = y; 
     }
   
     public Snake(int x,int y) {      //usaremos sempre x DEPOIS y por padrão
@@ -43,6 +40,7 @@ public class Snake {
             oeste = ImageIO.read(new File("snake_e.png"));
             corpo = ImageIO.read(new File("snake_body.png"));
         }
+        
         catch (IOException e) {
             System.out.println(e);
         }
@@ -55,9 +53,9 @@ public class Snake {
         if(corpoCobra.isEmpty())
             return norte;
         else{            
-         ultimosqm = new Posicao(corpoCobra.get(corpoCobra.size() - 1).x,corpoCobra.get(corpoCobra.size() - 1).y);
-        System.out.print(ultimosqm.x + " , ");
-        System.out.println(ultimosqm.y);
+        ultimosqm = new Posicao(corpoCobra.get(corpoCobra.size() - 1).x,corpoCobra.get(corpoCobra.size() - 1).y);
+        System.out.print(cabecaCobra.x + " , ");
+        System.out.println(cabecaCobra.y);
         if((ultimosqm.x == cabecaCobra.x) && (ultimosqm.y == cabecaCobra.y))
             System.out.println("erro: cobra desincronizada");
         }  
