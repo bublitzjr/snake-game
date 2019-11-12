@@ -18,7 +18,7 @@ public class Tela extends JFrame implements KeyListener {
 
 	JPanel painel = null;
         
-	personagem.Snake snake = new personagem.Snake(240,102); // onde a cobra começa
+	personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
     BufferedImage cobra = null;
     BufferedImage frutaimg = null;
     Fruta fruta = null;
@@ -28,7 +28,7 @@ public class Tela extends JFrame implements KeyListener {
                 
         Random rng = new Random();
 		setSize(800, 600);
-        snake.Setinicio(240,100);// onde a cobra restarta(de preferência o mesmo de onde ela começa)       
+        snake.Setinicio(380,302);// onde a cobra restarta(de preferência o mesmo de onde ela começa)       
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
 		
 		painel = new JPanel();
@@ -61,7 +61,7 @@ public class Tela extends JFrame implements KeyListener {
 	public void desenhar( Graphics g ){
                 if(fruta.x == snake.cabecaCobra.x && fruta.y == snake.cabecaCobra.y){
                     snake.tamanho++;
-                     fruta.novaFruta(1);
+                    fruta.novaFruta(1);
                 }
                    
 		frutaimg = Fruta.getImagem();
@@ -97,13 +97,19 @@ public class Tela extends JFrame implements KeyListener {
               }else{
                   snake.corpoCobra.get(snake.corpoCobra.size() - 1).x = snake.cabecaCobra.x;
                   snake.corpoCobra.get(snake.corpoCobra.size() - 1).y = snake.cabecaCobra.y;
+                  if(snake.tamanho>=1){
+                    for(int i = 1; i<snake.corpoCobra.size();i++){
+                    snake.corpoCobra.get(i-1).x = snake.corpoCobra.get(i).x;
+                    snake.corpoCobra.get(i-1).y = snake.corpoCobra.get(i).y;
+                    }
+                  }
               }
           }
           
 	@Override
 	public void keyPressed(KeyEvent e) {
                 
-        	if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if (snake.cabecaCobra.x < 760)  //não passar da borda direita                  
             {
                 adicionarCorpo();
@@ -117,9 +123,9 @@ public class Tela extends JFrame implements KeyListener {
             snake.reset();
             }
         }
-			if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-				if (snake.cabecaCobra.x > 20) //não passar da borda esquerda
-				{
+        if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+            if (snake.cabecaCobra.x > 20) //não passar da borda esquerda
+            {
                 adicionarCorpo();
                 snake.cabecaCobra.x-=20 ;
                 repaint();
@@ -130,8 +136,8 @@ public class Tela extends JFrame implements KeyListener {
             snake.reset();
             }
 }
-			if (e.getKeyCode() == KeyEvent.VK_UP) {
-				if (snake.cabecaCobra.y > 42)//não passar da borda superior
+	if (e.getKeyCode() == KeyEvent.VK_UP) {
+            if (snake.cabecaCobra.y > 42)//não passar da borda superior
             { 
                 adicionarCorpo();
                 snake.cabecaCobra.y-=20;
@@ -143,8 +149,8 @@ public class Tela extends JFrame implements KeyListener {
             snake.reset();
             }
         }
-			if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-				if (snake.cabecaCobra.y < 560) //não passar da borda inferior
+	if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+            if (snake.cabecaCobra.y < 560) //não passar da borda inferior
             {
                 adicionarCorpo();
                 snake.cabecaCobra.y+=20;
