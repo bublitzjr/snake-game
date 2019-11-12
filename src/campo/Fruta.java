@@ -15,20 +15,25 @@ public class Fruta extends Posicao{
   
     public Fruta(int x, int y) {
     	super(x, y);
-    	
-    //SPAW FRUTINHA ALETORIO falta programa ele pra lançar random apenas qnd fruta for comida
-   	Random gerador = new Random();
-   	for(int i = 0; i < 1; i++) {
-    	x = gerador.nextInt(700);
-    	y = gerador.nextInt(500);
-    	System.out.println(x+" , "+y);
-    	}
+    	System.out.println("Fruta: "+ x+" , "+y);
+    
     	
         try{
             frutinha = ImageIO.read(new File("fruta.png"));
         }catch (IOException e) {
             System.out.println(e);
         }
+    }
+    
+    public void novaFruta(int quantas){
+        // SPAW FRUTINHA ALETORIO falta programa ele pra lancar random apenas qnd fruta for comida
+   	Random rng = new Random(); //usar rng para Random padrÃ£o
+   	for(int i = 0; i < quantas; i++) {
+        x= 20*rng.nextInt(37)+20;
+        y= 20*rng.nextInt(28)+2+40;
+    	
+    	System.out.println("Fruta: "+ x+" , "+y);
+    	}
     }
     
      public static BufferedImage getImagem()

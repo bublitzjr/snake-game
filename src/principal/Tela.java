@@ -35,10 +35,35 @@ public class Tela extends JFrame implements KeyListener {
 		getContentPane().add(painel);
 		addKeyListener(this);         
                         
-        fruta = new Fruta(20*rng.nextInt(37)+1,20*rng.nextInt(28)+2+40);
+        fruta = new Fruta(20*rng.nextInt(37)+20,20*rng.nextInt(28)+2+40);
+        
+         new Thread(new Runnable() {
+         public void run() {             
+            try {                   
+                for(int i = 0;i<Integer.MAX_VALUE; i+=5){  
+                    if(i<100)
+                        Thread.sleep(1000);          
+                    if(i>=100 && i<300)
+                        Thread.sleep(800);
+                    if(i>=300 && i<500)
+                        Thread.sleep(600);   
+                        andar(snake.direcao);
+                 }
+                                    
+                } catch (Exception ex) {
+                     ex.printStackTrace();
+                }
+         }
+        }).start();
+        
 	}
 
 	public void desenhar( Graphics g ){
+                if(fruta.x == snake.cabecaCobra.x && fruta.y == snake.cabecaCobra.y){
+                    snake.tamanho++;
+                     fruta.novaFruta(1);
+                }
+                   
 		frutaimg = Fruta.getImagem();
 		cobra = snake.getImagem();
 		Graphics gPainel = painel.getGraphics();
@@ -46,37 +71,7 @@ public class Tela extends JFrame implements KeyListener {
 		
         g.drawImage(frutaimg, fruta.x, fruta.y, null);
        
-        int x = 0;
-        int y = 0;
-        
-        for(y = 0; y < 800; y+=20) {
-			g.drawLine(y, 0, y, 600);
-	        g.setColor(Color.lightGray);
-	     
-	         //LIMITE VISUAL
-	        if(y <= 0) {
-		         g.setColor(Color.black);
-	        }
-	         
-	        if(y == 760 && x <= 750) {
-	        	 g.setColor(Color.black);
-	        }
-		 }
-	        
-	     for(x = 0;  x < 600; x+=20) {
-	        g.drawLine(0, x, 800, x);
-	        g.setColor(Color.lightGray);
-	        	
-	      //LIMITE VISUAL
-	        if(x <= 20) {
-	        	g.setColor(Color.black);
-	        }
-	        	
-	        if(x == 560 && y <= 800) {
-	        	g.setColor(Color.black);
-		    }
-	        	
-	     }
+       desenharBordas(g);
 	     
         g.drawImage(cobra,snake.cabecaCobra.x, snake.cabecaCobra.y, null);
         snake.corpoCobra.forEach((posicao) -> desenharCorpo(posicao, g)); 	 
@@ -106,11 +101,9 @@ public class Tela extends JFrame implements KeyListener {
           }
           
 	@Override
-	public void keyPressed(KeyEvent e) {}
-	
-	@Override
-	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+	public void keyPressed(KeyEvent e) {
+                
+        	if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
             if (snake.cabecaCobra.x < 760)  //não passar da borda direita                  
             {
                 adicionarCorpo();
@@ -167,9 +160,68 @@ public class Tela extends JFrame implements KeyListener {
             if((snake.cabecaCobra.x == snake.corpoCobra.get(i).x) && (snake.cabecaCobra.y == snake.corpoCobra.get(i).y))
                 snake.reset();
         	}
+        }
+        
+        public void andar(String direcao){
+            if(direcao == "norte"){
+                adicionarCorpo();
+                snake.cabecaCobra.y-=20;
+                repaint();
+            }else if(direcao == "leste"){
+                adicionarCorpo();
+                snake.cabecaCobra.x+=20;
+                repaint();
+            }else if(direcao == "oeste"){
+                adicionarCorpo();
+                snake.cabecaCobra.x-=20 ;
+                repaint();
+            }else if(direcao == "sul"){
+                adicionarCorpo();
+                snake.cabecaCobra.y+=20;
+                repaint();
+            }
+        }
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+	
 		}
 
 	@Override
 	public void keyTyped(KeyEvent e) {}
+
+    private void desenharBordas(Graphics g) {
+         int x = 0;
+        int y = 0;
+        
+        for(y = 0; y < 800; y+=20) {
+			g.drawLine(y, 0, y, 600);
+	        g.setColor(Color.lightGray);
+	     
+	         //LIMITE VISUAL
+	        if(y <= 0) {
+		         g.setColor(Color.black);
+	        }
+	         
+	        if(y == 760 && x <= 750) {
+	        	 g.setColor(Color.black);
+	        }
+		 }
+	        
+	     for(x = 0;  x < 600; x+=20) {
+	        g.drawLine(0, x, 800, x);
+	        g.setColor(Color.lightGray);
+	        	
+	      //LIMITE VISUAL
+	        if(x <= 20) {
+	        	g.setColor(Color.black);
+	        }
+	        	
+	        if(x == 560 && y <= 800) {
+	        	g.setColor(Color.black);
+		    }
+	        	
+	     }
+    }
 	
 }

@@ -21,6 +21,7 @@ public class Snake {
     public static BufferedImage sul = null;
     public static BufferedImage oeste = null;
     public static BufferedImage corpo = null;
+    public static String direcao = null; 
     
     private Posicao inicio = new Posicao(0,0);
         
@@ -50,8 +51,10 @@ public class Snake {
     public BufferedImage getImagem()
     {
         Posicao ultimosqm = null;
-        if(corpoCobra.isEmpty())
+        if(corpoCobra.isEmpty()){
+            direcao = "norte";
             return norte;
+        }            
         else{            
         ultimosqm = new Posicao(corpoCobra.get(corpoCobra.size() - 1).x,corpoCobra.get(corpoCobra.size() - 1).y);
         System.out.print(cabecaCobra.x + " , ");
@@ -61,19 +64,24 @@ public class Snake {
         }  
             
          if((ultimosqm.x < cabecaCobra.x) && (ultimosqm.y == cabecaCobra.y)){
+             direcao = "leste";
              return leste;            
          }else 
          if((ultimosqm.x > cabecaCobra.x) && (ultimosqm.y == cabecaCobra.y)){
+             direcao = "oeste";
              return oeste; 
          }else
          if((ultimosqm.x == cabecaCobra.x) && (ultimosqm.y < cabecaCobra.y)){
+             direcao = "sul";
             return sul; 
          }else
+             direcao = "norte";
         return norte;
     }
     
     public void reset()
     {
+        tamanho = 0;
         System.out.println("vose perdeo");
         cabecaCobra.x = inicio.x;
         cabecaCobra.y = inicio.y;
