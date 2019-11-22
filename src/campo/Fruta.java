@@ -29,12 +29,12 @@ public class Fruta extends Posicao{
         
    	Random rng = new Random(); //usar rng para Random padrão
    	for(int i = 0; i < quantas; i++) {
-       //x= 20*rng.nextInt(38)+20;
-       // y= 20*rng.nextInt(26)+2+20;
+        x= 20*rng.nextInt(38)+20;
+        y= 20*rng.nextInt(26)+2+20;
         
         //easy debug settings:
-        x= 20*rng.nextInt(5)+20+100;
-        y= 20*rng.nextInt(5)+2+40+100;
+        //x= 20*rng.nextInt(5)+20+100;
+        //y= 20*rng.nextInt(5)+2+40+100;
     	
     	System.out.println("Fruta: "+ x+" , "+y);
     	}

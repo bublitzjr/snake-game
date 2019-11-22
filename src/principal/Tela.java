@@ -70,6 +70,7 @@ personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
 	public void desenhar( Graphics g ){
                 if(fruta.x == snake.cabecaCobra.x && fruta.y == snake.cabecaCobra.y){
                     snake.tamanho++;
+                    snake.corpoCobra.add( new Posicao(snake.corpoCobra.get(snake.corpoCobra.size()-1).x,snake.corpoCobra.get(snake.corpoCobra.size()-1).y)); 
                     fruta.novaFruta(1);
                     for(int i = 0;i<snake.corpoCobra.size();i++){
                        
