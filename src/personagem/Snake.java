@@ -13,7 +13,7 @@ import campo.Fruta;
 import javax.imageio.ImageIO;
 
 public class Snake {
-    public int tamanho = 0;
+    public int tamanho = 1;
     public static ArrayList<Posicao> corpoCobra = new ArrayList();
     public static Posicao cabecaCobra = new Posicao(0,0);
     public static BufferedImage norte = null;
@@ -22,6 +22,7 @@ public class Snake {
     public static BufferedImage oeste = null;
     public static BufferedImage corpo = null;
     public static String direcao = null; 
+    public static int speed = 0;
     
     private Posicao inicio = new Posicao(0,0);
         
@@ -81,6 +82,7 @@ public class Snake {
     
     public void reset()
     {
+        speed = 0;
         tamanho = 0;
         System.out.println("vose perdeo");
         cabecaCobra.x = inicio.x;

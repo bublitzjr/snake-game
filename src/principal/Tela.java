@@ -18,10 +18,12 @@ public class Tela extends JFrame implements KeyListener {
 
 	JPanel painel = null;
         
-	personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
+personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
     BufferedImage cobra = null;
     BufferedImage frutaimg = null;
     Fruta fruta = null;
+    String nextmove = null;
+    
         
 	public Tela() {	                
 		super("SNAKE");
@@ -35,19 +37,26 @@ public class Tela extends JFrame implements KeyListener {
 		getContentPane().add(painel);
 		addKeyListener(this);         
                         
-        fruta = new Fruta(20*rng.nextInt(37)+20,20*rng.nextInt(28)+2+40);
+        fruta = new Fruta(20*rng.nextInt(37)+20,20*rng.nextInt(27)+2+40);
         
          new Thread(new Runnable() {
          public void run() {             
             try {                   
-                for(int i = 0;i<Integer.MAX_VALUE; i+=5){  
-                    if(i<100)
-                        Thread.sleep(1000);          
-                    if(i>=100 && i<300)
-                        Thread.sleep(800);
-                    if(i>=300 && i<500)
-                        Thread.sleep(600);   
-                        andar(snake.direcao);
+                for(snake.speed = 0;; snake.speed++){  
+                    if(snake.speed<80){
+                        Thread.sleep(300);
+                            andar(snake.direcao);
+                    }
+                    if(snake.speed>=80 && snake.speed<200){
+                        Thread.sleep(200);
+                            andar(snake.direcao);
+                }
+                    if(snake.speed>=200){
+                        Thread.sleep(100); 
+                            andar(snake.direcao);
+                    }
+                        
+                      
                  }
                                     
                 } catch (Exception ex) {
@@ -62,6 +71,12 @@ public class Tela extends JFrame implements KeyListener {
                 if(fruta.x == snake.cabecaCobra.x && fruta.y == snake.cabecaCobra.y){
                     snake.tamanho++;
                     fruta.novaFruta(1);
+                    for(int i = 0;i<snake.corpoCobra.size();i++){
+                       
+                        if((fruta.y == snake.corpoCobra.get(i).y)&& (fruta.x == snake.corpoCobra.get(i).x)){
+                            fruta.novaFruta(1);
+                        }
+                    }
                 }
                    
 		frutaimg = Fruta.getImagem();
@@ -110,82 +125,90 @@ public class Tela extends JFrame implements KeyListener {
 	public void keyPressed(KeyEvent e) {
                 
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
-            if (snake.cabecaCobra.x < 760)  //não passar da borda direita                  
-            {
-                adicionarCorpo();
-                snake.cabecaCobra.x+=20;
-                repaint();
-            }else
+           
+                if(snake.direcao != "oeste")
+                snake.direcao = "leste";
             
-            {
-           // jogo.morreu();
-           //scoreboard.add(this.score);//implementações futuras
-            snake.reset();
-            }
+            
+            
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
-            if (snake.cabecaCobra.x > 20) //não passar da borda esquerda
-            {
-                adicionarCorpo();
-                snake.cabecaCobra.x-=20 ;
-                repaint();
-            }else
-            {
-           // jogo.morreu();
-           //scoreboard.add(this.score);//implementações futuras
-            snake.reset();
-            }
+           
+                if(snake.direcao != "leste")
+                snake.direcao = "oeste";
+            
 }
 	if (e.getKeyCode() == KeyEvent.VK_UP) {
-            if (snake.cabecaCobra.y > 42)//não passar da borda superior
-            { 
-                adicionarCorpo();
-                snake.cabecaCobra.y-=20;
-                repaint();
-            }else
-            {
-           // jogo.morreu();
-           //scoreboard.add(this.score);//implementações futuras
-            snake.reset();
-            }
+            
+                if(snake.direcao != "sul")
+                snake.direcao = "norte";
+            
         }
 	if (e.getKeyCode() == KeyEvent.VK_DOWN) {
-            if (snake.cabecaCobra.y < 560) //não passar da borda inferior
-            {
-                adicionarCorpo();
-                snake.cabecaCobra.y+=20;
-                repaint();
-            }else
-            {
-           // jogo.morreu();
-           //scoreboard.add(this.score); //implementações futuras
-            snake.reset();
-            }
+           
+                if(snake.direcao != "norte")
+                snake.direcao = "sul";
+                
+           
 			}
-        for(int i = 0; i < (snake.corpoCobra.size() - 1); i++){
-            if((snake.cabecaCobra.x == snake.corpoCobra.get(i).x) && (snake.cabecaCobra.y == snake.corpoCobra.get(i).y))
-                snake.reset();
-        	}
+       
         }
         
         public void andar(String direcao){
             if(direcao == "norte"){
-                adicionarCorpo();
-                snake.cabecaCobra.y-=20;
-                repaint();
+                if (snake.cabecaCobra.y > 42)//não passar da borda superior
+                {
+                    adicionarCorpo();
+                    snake.cabecaCobra.y-=20;
+                    repaint();
+                }else
+                {
+                // jogo.morreu();
+                //scoreboard.add(this.score);//implementações futuras
+                    snake.reset();
+                }
             }else if(direcao == "leste"){
-                adicionarCorpo();
-                snake.cabecaCobra.x+=20;
-                repaint();
+                if (snake.cabecaCobra.x < 760)  //não passar da borda direita                  
+                {
+                
+                    adicionarCorpo();
+                    snake.cabecaCobra.x+=20;
+                    repaint();
+                }else
+                 {
+                // jogo.morreu();
+                //scoreboard.add(this.score);//implementações futuras
+                 snake.reset();
+                 }
             }else if(direcao == "oeste"){
-                adicionarCorpo();
-                snake.cabecaCobra.x-=20 ;
-                repaint();
+                  if (snake.cabecaCobra.x > 20) //não passar da borda esquerda
+                {
+                    adicionarCorpo();
+                    snake.cabecaCobra.x-=20 ;
+                    repaint();
+                }else
+                 {
+                // jogo.morreu();
+                //scoreboard.add(this.score);//implementações futuras
+                snake.reset();
+                }
             }else if(direcao == "sul"){
-                adicionarCorpo();
-                snake.cabecaCobra.y+=20;
-                repaint();
+                 if (snake.cabecaCobra.y < 560) //não passar da borda inferior
+                 {
+                    adicionarCorpo();
+                    snake.cabecaCobra.y+=20;
+                    repaint();
+                 }else
+                 {
+                 // jogo.morreu();
+                 //scoreboard.add(this.score); //implementações futuras
+                 snake.reset();
+                 }
             }
+             for(int i = 0; i < (snake.corpoCobra.size() - 1); i++){
+            if((snake.cabecaCobra.x == snake.corpoCobra.get(i).x) && (snake.cabecaCobra.y == snake.corpoCobra.get(i).y))
+                snake.reset();
+        }
         }
 	
 	@Override
