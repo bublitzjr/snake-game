@@ -15,7 +15,7 @@ public class Fruta extends Posicao{
   
     public Fruta(int x, int y) {
     	super(x, y);
-    	System.out.println("Fruta: "+ x+" , "+y);
+    	//System.out.println("Fruta: "+ x+" , "+y);
     
     	
         try{
@@ -30,13 +30,13 @@ public class Fruta extends Posicao{
    	Random rng = new Random(); //usar rng para Random padrão
    	for(int i = 0; i < quantas; i++) {
         x= 20*rng.nextInt(38)+20;
-        y= 20*rng.nextInt(26)+2+20;
+        y= 20*rng.nextInt(26)+2+40;
         
         //easy debug settings:
         //x= 20*rng.nextInt(5)+20+100;
         //y= 20*rng.nextInt(5)+2+40+100;
     	
-    	System.out.println("Fruta: "+ x+" , "+y);
+    	//System.out.println("Fruta: "+ x+" , "+y);
     	}
     }
     

@@ -16,14 +16,16 @@ import java.util.Random;
 
 public class Tela extends JFrame implements KeyListener {
 
-	JPanel painel = null;
+    JPanel painel = null;
+    JPanel fundo = null;
         
-personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
+    personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
     BufferedImage cobra = null;
     BufferedImage frutaimg = null;
     Fruta fruta = null;
     String nextmove = null;
-    
+   
+    Thread thread = null;
         
 	public Tela() {	                
 		super("SNAKE");
@@ -31,39 +33,43 @@ personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
         Random rng = new Random();
 		setSize(800, 600);
         snake.Setinicio(380,302);// onde a cobra restarta(de preferência o mesmo de onde ela começa)       
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
-		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
 		painel = new JPanel();
-		getContentPane().add(painel);
-		addKeyListener(this);         
+                
+               
+		getContentPane().add(painel);	
+                
+		addKeyListener(this);   
+                
+                
                         
-        fruta = new Fruta(20*rng.nextInt(37)+20,20*rng.nextInt(27)+2+40);
+        fruta = new Fruta(20*rng.nextInt(38)+20,20*rng.nextInt(26)+2+40);
         
-         new Thread(new Runnable() {
+         thread =  new Thread(new Runnable() {
          public void run() {             
-            try {                   
+            try { 
                 for(snake.speed = 0;; snake.speed++){  
-                    if(snake.speed<80){
-                        Thread.sleep(300);
-                            andar(snake.direcao);
+                  
+                    if(snake.speed<80){                        
+                        Thread.sleep(400);
+                            andar(snake.proximadirecao);                        
                     }
                     if(snake.speed>=80 && snake.speed<200){
-                        Thread.sleep(200);
-                            andar(snake.direcao);
-                }
-                    if(snake.speed>=200){
-                        Thread.sleep(100); 
-                            andar(snake.direcao);
+                        Thread.sleep(300);
+                            andar(snake.proximadirecao);
                     }
-                        
-                      
-                 }
-                                    
+                    if(snake.speed>=200){
+                        Thread.sleep(270); 
+                            andar(snake.proximadirecao);
+                    }
+                  }
+                                   
                 } catch (Exception ex) {
                      ex.printStackTrace();
                 }
          }
-        }).start();
+        });
+                 thread.start();
         
 	}
 
@@ -83,11 +89,14 @@ personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
 		frutaimg = Fruta.getImagem();
 		cobra = snake.getImagem();
 		Graphics gPainel = painel.getGraphics();
+		
 		gPainel.clearRect(0, 0, getWidth(), getHeight());
 		
+                desenharBordas(g);
+                
         g.drawImage(frutaimg, fruta.x, fruta.y, null);
        
-       desenharBordas(g);
+        
 	     
         g.drawImage(cobra,snake.cabecaCobra.x, snake.cabecaCobra.y, null);
         snake.corpoCobra.forEach((posicao) -> desenharCorpo(posicao, g)); 	 
@@ -128,32 +137,28 @@ personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
         if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
            
                 if(snake.direcao != "oeste")
-                snake.direcao = "leste";
-            
-            
-            
+                snake.proximadirecao = "leste";
         }
         if (e.getKeyCode() == KeyEvent.VK_LEFT) {
            
                 if(snake.direcao != "leste")
-                snake.direcao = "oeste";
-            
-}
+                snake.proximadirecao = "oeste";            
+        }
 	if (e.getKeyCode() == KeyEvent.VK_UP) {
             
                 if(snake.direcao != "sul")
-                snake.direcao = "norte";
-            
+                snake.proximadirecao = "norte";            
         }
 	if (e.getKeyCode() == KeyEvent.VK_DOWN) {
            
                 if(snake.direcao != "norte")
-                snake.direcao = "sul";
-                
-           
-			}
-       
+                snake.proximadirecao = "sul";   
         }
+       
+        
+        }
+        
+        
         
         public void andar(String direcao){
             if(direcao == "norte"){

@@ -8,6 +8,7 @@ import campo.Posicao;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import campo.Fruta;
+import javax.swing.JOptionPane;
 
 
 import javax.imageio.ImageIO;
@@ -22,6 +23,7 @@ public class Snake {
     public static BufferedImage oeste = null;
     public static BufferedImage corpo = null;
     public static String direcao = null; 
+    public static String proximadirecao = null; 
     public static int speed = 0;
     
     private Posicao inicio = new Posicao(0,0);
@@ -54,12 +56,13 @@ public class Snake {
         Posicao ultimosqm = null;
         if(corpoCobra.isEmpty()){
             direcao = "norte";
+            proximadirecao = "norte";
             return norte;
         }            
         else{            
         ultimosqm = new Posicao(corpoCobra.get(corpoCobra.size() - 1).x,corpoCobra.get(corpoCobra.size() - 1).y);
-        System.out.print(cabecaCobra.x + " , ");
-        System.out.println(cabecaCobra.y);
+        //System.out.print(cabecaCobra.x + " , ");
+        //System.out.println(cabecaCobra.y);
         if((ultimosqm.x == cabecaCobra.x) && (ultimosqm.y == cabecaCobra.y))
             System.out.println("erro: cobra desincronizada");
         }  
@@ -83,11 +86,17 @@ public class Snake {
     public void reset()
     {
         speed = 0;
-        tamanho = 0;
-        System.out.println("vose perdeo");
+        
+        //if(tamanho> arquivo.tamanhorecord){
+        JOptionPane.showMessageDialog(null, "Novo Record!");
+        String nome = JOptionPane.showInputDialog("Digite o seu Apelido:");  
+        // arquivo.salvar(nome,tamanho);
+        //}       
+        
         cabecaCobra.x = inicio.x;
         cabecaCobra.y = inicio.y;
         corpoCobra.clear();
+        tamanho = 0;
     }
 }
 
