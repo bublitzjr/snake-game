@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 
 import javax.imageio.ImageIO;
+import principal.Savegame;
 
 public class Snake {
     public int tamanho = 1;
@@ -25,6 +26,7 @@ public class Snake {
     public static String direcao = null; 
     public static String proximadirecao = null; 
     public static int speed = 0;
+    Savegame savegame = new Savegame();
     
     private Posicao inicio = new Posicao(0,0);
         
@@ -87,11 +89,15 @@ public class Snake {
     {
         speed = 0;
         
-        //if(tamanho> arquivo.tamanhorecord){
+        if(tamanho> savegame.getHighscore()){
         JOptionPane.showMessageDialog(null, "Novo Record!");
         String nome = JOptionPane.showInputDialog("Digite o seu Apelido:");  
-        // arquivo.salvar(nome,tamanho);
-        //}       
+        savegame.Salvar(nome,Integer.toString(tamanho));
+        }else{
+            String mensagem = "Seu tamanho: " + tamanho + "\n" + 
+                    "Tamanho record: "+ savegame.getHighscore()+ " de "+ savegame.getNome();
+            JOptionPane.showMessageDialog(null, mensagem);
+        }       
         
         cabecaCobra.x = inicio.x;
         cabecaCobra.y = inicio.y;
