@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import principal.Savegame;
 
 public class Snake {
-    public int tamanho = 1;
+    public int tamanho = 177013;
     public static ArrayList<Posicao> corpoCobra = new ArrayList();
     public static Posicao cabecaCobra = new Posicao(0,0);
     public static BufferedImage norte = null;
@@ -63,8 +63,7 @@ public class Snake {
         }            
         else{            
         ultimosqm = new Posicao(corpoCobra.get(corpoCobra.size() - 1).x,corpoCobra.get(corpoCobra.size() - 1).y);
-        //System.out.print(cabecaCobra.x + " , ");
-        //System.out.println(cabecaCobra.y);
+        //System.out.println(cabecaCobra.x + " , " + cabecaCobra.y);
         if((ultimosqm.x == cabecaCobra.x) && (ultimosqm.y == cabecaCobra.y))
             System.out.println("erro: cobra desincronizada");
         }  
@@ -90,7 +89,8 @@ public class Snake {
         speed = 0;
         
         if(tamanho> savegame.getHighscore()){
-        JOptionPane.showMessageDialog(null, "Novo Record!");
+        JOptionPane.showMessageDialog(null, "Seu tamanho: " + tamanho + "\n" +
+                "Novo Record!");
         String nome = JOptionPane.showInputDialog("Digite o seu Apelido:");  
         savegame.Salvar(nome,Integer.toString(tamanho));
         }else{
@@ -102,7 +102,7 @@ public class Snake {
         cabecaCobra.x = inicio.x;
         cabecaCobra.y = inicio.y;
         corpoCobra.clear();
-        tamanho = 0;
+        tamanho = 1;
     }
 }
 

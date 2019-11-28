@@ -12,14 +12,18 @@ import campo.Fruta;
 import java.awt.image.BufferedImage;
 import personagem.Snake;
 import java.util.Random;
+import javax.imageio.ImageIO;
+import java.io.File;
 
 
 public class Tela extends JFrame implements KeyListener {
 
     JPanel painel = null;
-    JPanel fundo = null;
-        
-    personagem.Snake snake = new personagem.Snake(380,302); // onde a cobra começa
+    
+    public static BufferedImage fundo = null;
+   
+      
+    personagem.Snake snake = new personagem.Snake(380,300); // onde a cobra começa
     BufferedImage cobra = null;
     BufferedImage frutaimg = null;
     Fruta fruta = null;
@@ -30,20 +34,21 @@ public class Tela extends JFrame implements KeyListener {
 	public Tela() {	                
 		super("SNAKE");
                 
+     try{fundo = ImageIO.read(new File("fundoimg.png"));}catch(Exception e){}
+                
         Random rng = new Random();
 		setSize(800, 600);
-        snake.Setinicio(380,302);// onde a cobra restarta(de preferência o mesmo de onde ela começa)       
+                snake.Setinicio(380,300);// onde a cobra restarta(de preferência o mesmo de onde ela começa)       
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);			
 		painel = new JPanel();
                 
-               
 		getContentPane().add(painel);	
                 
 		addKeyListener(this);   
                 
                 
                         
-        fruta = new Fruta(20*rng.nextInt(38)+20,20*rng.nextInt(26)+2+40);
+        fruta = new Fruta(20*rng.nextInt(38)+20,20*rng.nextInt(26)+40);
         
          thread =  new Thread(new Runnable() {
          public void run() {             
@@ -92,7 +97,7 @@ public class Tela extends JFrame implements KeyListener {
 		
 		gPainel.clearRect(0, 0, getWidth(), getHeight());
 		
-                desenharBordas(g);
+                desenharBordasimg(g);
                 
         g.drawImage(frutaimg, fruta.x, fruta.y, null);
        
@@ -102,6 +107,10 @@ public class Tela extends JFrame implements KeyListener {
         snake.corpoCobra.forEach((posicao) -> desenharCorpo(posicao, g)); 	 
 	
 		}
+        
+        public void desenharBordasimg(Graphics g){
+            g.drawImage(fundo, 0, 0, null);
+        }
         
         public void desenharCorpo(Posicao posicao, Graphics g){
             g.drawImage(snake.corpo,posicao.x, posicao.y, null);
@@ -162,7 +171,7 @@ public class Tela extends JFrame implements KeyListener {
         
         public void andar(String direcao){
             if(direcao == "norte"){
-                if (snake.cabecaCobra.y > 42)//não passar da borda superior
+                if (snake.cabecaCobra.y > 40)//não passar da borda superior
                 {
                     adicionarCorpo();
                     snake.cabecaCobra.y-=20;
@@ -227,7 +236,7 @@ public class Tela extends JFrame implements KeyListener {
 
     private void desenharBordas(Graphics g) {
          int x = 0;
-        int y = 0;
+         int y = 0;
         
         for(y = 0; y < 800; y+=20) {
 			g.drawLine(y, 0, y, 600);
