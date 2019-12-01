@@ -15,7 +15,7 @@ import javax.imageio.ImageIO;
 import principal.Savegame;
 
 public class Snake {
-    public int tamanho = 177013;
+    public int tamanho = 1;
     public static ArrayList<Posicao> corpoCobra = new ArrayList();
     public static Posicao cabecaCobra = new Posicao(0,0);
     public static BufferedImage norte = null;
